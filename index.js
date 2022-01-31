@@ -40,7 +40,7 @@ function test(host, port, callback)
                 if (ms.online) 
                 {
                     // console.log(`Found minecraft server: ${host}:${port}.`);
-                    // console.log(`Version: ${ms.version} with  ${ms.current_players} out of ${ms.max_players} players.`);
+                    // console.log(`Version: ${ms.version} with ${ms.current_players} out of ${ms.max_players} players.`);
                     // console.log(`Motd: ${ms.motd}`);
                     // console.log(`Latency: ${ms.latency} ms`);
                     

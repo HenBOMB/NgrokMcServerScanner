@@ -1,35 +1,37 @@
-const net = require('net');
+const { Socket } = require('net');
 const { writeFileSync } = require('fs');
 const ms = require('minestat');
 const data = [];
-var i;
 
 (async () => {
 
-    for (i = 10000; i < 11000; i++) 
+    var i = 10000;
+
+    const func = server => 
     {
-        test('0.tcp.ngrok.io', i, run);
-        test('1.tcp.ngrok.io', i, run);
-        test('2.tcp.ngrok.io', i, run);
-        test('4.tcp.ngrok.io', i, run);
-        test('6.tcp.ngrok.io', i, run);
-        test('8.tcp.ngrok.io', i, run);
+        data.push(server);
+
+        if(i >= 11000)
+            writeFileSync("./out.json", JSON.stringify({ out: data }, null, 2));
+        else
+            data.push(server);
     }
+
+    for (;i < 11000; i++) 
+    {
+        scan('0.tcp.ngrok.io', i, func);
+        scan('1.tcp.ngrok.io', i, func);
+        scan('2.tcp.ngrok.io', i, func);
+        scan('4.tcp.ngrok.io', i, func);
+        scan('6.tcp.ngrok.io', i, func);
+        scan('8.tcp.ngrok.io', i, func);
+    }
+
 })();
 
-function run(server)
+function scan(host, port, callback)
 {
-    data.push(server);
-
-    if(i >= 11000)
-        writeFileSync("./out.json", JSON.stringify({ out: data }, null, 2));
-    else
-        data.push(server);
-}
-
-function test(host, port, callback)
-{
-    const sock = new net.Socket();
+    const sock = new Socket();
 
     sock.setTimeout(1000);
 
